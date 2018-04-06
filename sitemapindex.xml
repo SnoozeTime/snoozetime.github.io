@@ -6,55 +6,27 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
-  <loc>http://snoozetime.github.io/authors/roberto-alsina.xml</loc>
-  <lastmod>2018-04-02T08:52:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://snoozetime.github.io/authors/snoozetime.xml</loc>
-  <lastmod>2018-04-05T09:08:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://snoozetime.github.io/categories/blog.xml</loc>
-  <lastmod>2018-04-02T08:46:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://snoozetime.github.io/categories/cat_nikola.xml</loc>
-  <lastmod>2018-04-02T08:46:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>http://snoozetime.github.io/categories/cat_programming.xml</loc>
-  <lastmod>2018-04-05T09:08:00Z</lastmod>
+  <lastmod>2018-04-06T06:28:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/cryptocurrency.xml</loc>
-  <lastmod>2018-04-05T09:08:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://snoozetime.github.io/categories/demo.xml</loc>
-  <lastmod>2018-04-02T08:46:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://snoozetime.github.io/categories/nikola.xml</loc>
-  <lastmod>2018-04-02T08:46:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://snoozetime.github.io/categories/python.xml</loc>
-  <lastmod>2018-04-02T08:46:00Z</lastmod>
+  <lastmod>2018-04-06T06:28:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/galleries/demo/rss.xml</loc>
-  <lastmod>2018-04-05T09:14:00Z</lastmod>
+  <lastmod>2018-04-06T06:28:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/galleries/rss.xml</loc>
-  <lastmod>2018-04-05T09:14:00Z</lastmod>
+  <lastmod>2018-04-06T06:28:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/rss.xml</loc>
-  <lastmod>2018-04-05T09:14:00Z</lastmod>
+  <lastmod>2018-04-06T06:28:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/sitemap.xml</loc>
-  <lastmod>2018-04-05T09:14:00Z</lastmod>
+  <lastmod>2018-04-06T06:28:00Z</lastmod>
  </sitemap>
 </sitemapindex>
