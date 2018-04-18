@@ -1,0 +1,220 @@
+<p>
+I'm always amazed when I watch people mastering emacs. They can do everything
+so much faster and with less keystrokes. However, if you have no experience with
+elisp like me, extending emacs to do what I want seems like a daunting task.
+</p>
+
+<p>
+As always, reading books and blogs about Emacs can help (ironic that I am writing about this isn't it),
+but practice beats everything when it comes to learing a new programming language.
+That's why, after doing 20 times the same operation, I decided to implement some shortcut in Elisp.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">What I am trying to achieve</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I am working in multiple projects at a time, both in my professional and personal
+life so I need to way to create notes quickly, and organize them so that I can
+find them easily. I used to use Evernote for this but after switching everything
+to Emacs I prefer using Orgmode.
+</p>
+
+<p>
+My custom Emacs command will prompt me for a project and a note name, and will
+create a file in the correctly directory that I can edit.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Let's dissect the problem a bit</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Here I need a way to:
+</p>
+<ul class="org-ul">
+<li>Find the list of my current projects
+</li>
+<li>Get a name for the new note
+</li>
+<li>Create the file name from above
+</li>
+<li>Create the note and switch to orgmode
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">How to test Elips easily</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Elisp is much easier when you can test commands one by one. There is a good tutorial <a href="https://learnxinyminutes.com/docs/elisp/">here</a> on lisp-interaction-mode.
+This tutorial also links the great essay by Norvig about how to learn a programming language so I thought it was
+appropriate to link it <a href="http://norvig.com/21-days.html">here</a> as well.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">Find all the projects</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Projects here are represented as subdirectory of the projects folder. Basically, the folders are structured as: ~/notes/projects/,
+so notes for project 'example' would be stored under ~/notes/projects/example/.
+</p>
+
+<p>
+Here comes the first function. It will fetch all the directories under the projects folder and ask the user to choose one.
+</p>
+
+<div class="highlight"><pre><span></span>(defvar my/project-path &quot;~/notes/projects&quot;)
+
+(defun my/pick-project ()
+  &quot;Prompt user to pick a choice from a list.&quot;
+  (let ((choices (directory-files my/project-path)))
+    (message &quot;%s&quot; (completing-read &quot;Open bookmark:&quot; choices ))))
+</pre></div>
+
+<p>
+Here, <i>directory-files</i> will list all the files in the given directory (one improvement would be to keep only folders).
+Next line will prompt me for a choice in this list of file and will return my choice.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3">Get a note name</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+To read a string from an user, read-string is the way to go.
+</p>
+
+<div class="highlight"><pre><span></span>(defun my/choose-note-name ()
+  &quot;Prompt user to choose a note name&quot;
+  (read-string &quot;Choose the note name: &quot;))
+</pre></div>
+
+<p>
+This will open a mini-buffer and will display "Choose the note name: ". It will return the user's answer.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4">Concatenate everything to get the note path</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+I played around a bit with clojure so I was expecting concatenating a list of strings to be as easy, but unfortunatly
+it is slightly more complicated here. I am using the concatenate function that requires a type specifier.
+</p>
+
+<div class="highlight"><pre><span></span>(concatenate &#39;string &quot;string1&quot; &quot;string2&quot;)
+</pre></div>
+
+<p>
+In the next function, I am also using the let form which let (:')) me write cleaner code.
+</p>
+
+<div class="highlight"><pre><span></span>(defun my/create-note-name ()
+  (let ((project-name (my/pick-project))
+	(note-name (my/choose-note-name)))
+    (concatenate &#39;string
+		 me/project-path
+		 &quot;/&quot;
+		 project-name
+		 &quot;/&quot;
+		 note-name
+		 &quot;.org&quot;)))
+</pre></div>
+
+<p>
+The hardcoded slashes are ugly and I pretty sure there is a better way to create the path from tokens&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5">Create the note</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+You can use find-file to create a file and edit it in the current window. In my case, I want to open a new window to edit
+the note so I am using find-file-other-window instead.
+</p>
+
+<p>
+The function looks like:
+</p>
+
+<div class="highlight"><pre><span></span>(defun my/create-new-project-note ()
+  (interactive)
+  (let ((filename (my/create-note-name)))
+    (find-file-other-window filename)
+    (org-mode)))
+</pre></div>
+
+<p>
+Notice (interactive) which is there to make the function available when typing M-x. (org-mode) is also called after switching
+buffer so that the correct mode is used for editing the note.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">It's done! But&#x2026;</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+There is a lot of things to improve:
+</p>
+<ul class="org-ul">
+<li>I'd like to be able to create a new project if it does not exist instead of having to create a new folder myself.
+</li>
+<li>directory-files lists all files in a directory, including non-folders and ".", "..". These need to be filtered out.
+</li>
+<li>Concatenating is ugly.
+</li>
+<li>After creating a note, I am using yasnippet to set the note skeleton. There should be a way to automize that.
+</li>
+</ul>
+
+<p>
+That first experience with Elisp was anyway encouraging as I used this function everyday. Stay tuned for other code dissection ;)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Full code</h2>
+<div class="outline-text-2" id="text-4">
+<div class="highlight"><pre><span></span>(defvar my/project-path &quot;~/Nextcloud/notes/projects&quot;)
+
+(defun my/pick-project ()
+  &quot;Prompt user to pick a choice from a list.&quot;
+  (let ((choices (directory-files my/project-path)))
+    (message &quot;%s&quot; (completing-read &quot;Open bookmark:&quot; choices ))))
+
+(defun my/choose-note-name ()
+  &quot;Prompt user to choose a note name&quot;
+  (read-string &quot;Choose the note name: &quot;))
+
+
+(defun my/create-note-name ()
+  (let ((project-name (my/pick-project))
+	(note-name (my/choose-note-name)))
+    (concatenate &#39;string
+		 me/project-path
+		 &quot;/&quot;
+		 project-name
+		 &quot;/&quot;
+		 note-name
+		 &quot;.org&quot;)))
+
+(defun my/create-new-project-note ()
+  (interactive)
+  (let ((filename (my/create-note-name)))
+    (find-file-other-window filename)
+    (org-mode)))
+</pre></div>
+</div>
+</div>
