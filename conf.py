@@ -135,15 +135,15 @@ TRANSLATIONS_PATTERN = "{path}.{lang}.{ext}"
 
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
-        ('/index.html', 'Home', 'icon-home'),
-        ('/archive.html', 'Archives', 'icon-folder-open-alt'),
-        ('/categories/index.html', 'Tags', 'icon-tags'),
-        ('/rss.xml', 'RSS', 'icon-rss'),
+        ('/index.html', 'Home'),
+        ('/archive.html', 'Archives' ),
+        ('/categories/index.html', 'Tags'),
+        ('/rss.xml', 'RSS'),
     ),
 }
 
 # Name of the theme to use.
-THEME = "zen"
+THEME = "lagom4ni"
 
 # Primary color of your theme. This will be used to customize your theme and
 # auto-generate related colors in POSTS_SECTION_COLORS. Must be a HEX value.
