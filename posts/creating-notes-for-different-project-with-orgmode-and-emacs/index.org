@@ -2,7 +2,7 @@
 .. title: Creating notes for different project with Orgmode and Emacs
 .. slug: creating-notes-for-different-project-with-orgmode-and-emacs
 .. date: 2018-04-16 22:04:33 UTC+09:00
-.. tags: emacs learning
+.. tags: emacs,learning
 .. category: code
 .. link:
 .. description:
