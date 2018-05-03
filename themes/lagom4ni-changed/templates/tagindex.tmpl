@@ -1,0 +1,8 @@
+## -*- coding: utf-8 -*-
+<%namespace name="post_helper" file="post_helper.tmpl"/>
+<%inherit file="index.tmpl"/>
+<%block name="content">
+    % for post in posts:
+        ${post_helper.post_full(post, False, index_teasers)}
+    % endfor
+</%block>
