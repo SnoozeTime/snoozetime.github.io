@@ -150,12 +150,12 @@ if __name__ == "__name__":
 We insert the test_case variable in the template by passing it as a keyword argument
 of the render method of jinja2.Template. This will print:
 
-#+BEGIN_QUOTE
+#+BEGIN_SRC xml
 <root>
     <value1>value1</value1>
     <value2>value2</value2>>
 </root>
-#+END_QUOTE
+#+END_SRC
 
 Creating the template for the java test class can be done in a similar fashion.
 Here, we will leverage the for loop of jinja.
