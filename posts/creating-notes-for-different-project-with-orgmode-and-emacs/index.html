@@ -1,52 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="">
-<meta name="author" content="Snoozetime">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Creating notes for different project with Orgmode and Emacs | Snoozetime's webpage</title>
-<link href="../../assets/css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/html4css1.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_rst.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/base.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/layout.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/skeleton.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/screen.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<meta name="theme-color" content="#400000">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://snoozetime.github.io/posts/creating-notes-for-different-project-with-orgmode-and-emacs/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="assets/css/typeplate.css">
+<link rel="stylesheet" media="screen" href="http://openfontlibrary.org/face/railway-sans" type="text/css">
+<meta name="author" content="Snoozetime">
+<link rel="prev" href="../kucoin-rest-api-reality-check/" title="Kucoin REST API, reality check" type="text/html">
+<link rel="next" href="../fantasy-novel-series-and-the-wait/" title="Fantasy novel series, and the Wait" type="text/html">
+<meta property="og:site_name" content="Snoozetime's webpage">
+<meta property="og:title" content="Creating notes for different project with Orgmode and Emacs">
+<meta property="og:url" content="http://snoozetime.github.io/posts/creating-notes-for-different-project-with-orgmode-and-emacs/">
+<meta property="og:description" content="I'm always amazed when I watch people mastering emacs. They can do everything
+so much faster and with less keystrokes. However, if you have no experience with
+elisp like me, extending emacs to do what">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2018-04-16T22:04:33+09:00">
+<meta property="article:tag" content="emacs">
+<meta property="article:tag" content="learning">
 </head>
 <body>
-    <div class="container">
-        <div class="four columns sidebar">
-            <nav><!--Sidebar content--><h1 id="blog-title">
-                <a href="http://snoozetime.github.io/" title="Snoozetime's webpage">Snoozetime's webpage</a>
-            </h1>
-            <hr>
-<hr>
-<div id="social">
-            
-    
+<!-- Menubar -->
 
-            </div>
-            
-    <ul>
-<li> <a href="../../index.html"> Home </a> </li>
-            <li> <a href="../../archive.html"> Archives </a> </li>
-            <li> <a href="../../categories/index.html"> Tags </a> </li>
-            <li> <a href="../../rss.xml"> RSS </a> </li>
-    </ul>
-<hr></nav>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation"><div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://snoozetime.github.io/">Snoozetime's webpage</a>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+<li>
+<a href="../../index.html">Home</a>
+                </li>
+<li>
+<a href="../../archive.html">Archives</a>
+                </li>
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS</a>
+
+        </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<!--Add Links to social media sites --><!-- pass --><li>
+    <a href="index.org" id="sourcelink">Source</a>
+    </li>
+
+        </ul>
 </div>
-        <div class="eleven columns content">
+<!-- /.navbar-collapse -->
+    </div>
+</nav><!-- End of Menubar --><div class="container">
+  <!--Body content-->
+  <div class="row">
+      
+      
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Creating notes for different project with Orgmode and Emacs</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Snoozetime
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2018-04-16T22:04:33+09:00" itemprop="datePublished" title="2018-04-16 22:04">2018-04-16 22:04</time></a></p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/creating-notes-for-different-project-with-orgmode-and-emacs.html">Comments</a>
+
+
             
-    
-    <div class="postbox">
-        <h1>
-                Creating notes for different project with Orgmode and Emacs
-        </h1>
-        <div class="post"> <p>
+        </p>
+<p class="sourceline"><a href="index.org" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p>
 I'm always amazed when I watch people mastering emacs. They can do everything
 so much faster and with less keystrokes. However, if you have no experience with
 elisp like me, extending emacs to do what I want seems like a daunting task.
@@ -264,27 +314,23 @@ That first experience with Elisp was anyway encouraging as I used this function 
     <span class="p">(</span><span class="nf">org-mode</span><span class="p">)))</span>
 </pre></div>
 </div>
-</div> </div>
-        
-    <div class="meta">
-        <span class="date">
-            <time class="published" datetime="2018-04-16T22:04:33+09:00">2018-04-16 22:04</time></span>
-        <ul class="tags">
-<li><a href="../../categories/emacs/">emacs</a></li>
-            <li><a href="../../categories/learning/">learning</a></li>
-        </ul>
 </div>
-
-            
-    <ul class="pager">
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/emacs/" rel="tag">emacs</a></li>
+            <li><a class="tag p-category" href="../../categories/learning/" rel="tag">learning</a></li>
+        </ul>
+<ul class="pager hidden-print">
 <li class="previous">
-            <a href="../kucoin-rest-api-reality-check/">← Previous post</a>
-        </li>
-        <li class="next">
-            <a href="../fantasy-novel-series-and-the-wait/">Next post →</a>
-        </li>
-    </ul>
-<div id="disqus_thread"></div>
+                <a href="../kucoin-rest-api-reality-check/" rel="prev" title="Kucoin REST API, reality check">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../fantasy-novel-series-and-the-wait/" rel="next" title="Fantasy novel series, and the Wait">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
         <script>
         var disqus_shortname ="https-snoozetime-github-io",
             disqus_url="http://snoozetime.github.io/posts/creating-notes-for-different-project-with-orgmode-and-emacs/",
@@ -303,17 +349,41 @@ That first experience with Elisp was anyway encouraging as I used this function 
     <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-    </div>
+        </section></article><script>var disqus_shortname="https-snoozetime-github-io";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
 
+  <div class="footerbox">
+    Contents © 2018         <a href="mailto:benoit.eudier@gmail.com">Snoozetime</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
     
+  </div>
+<!--End of body content-->
+</div>
 
-
-            <div class="footer">
-                <small>Contents © 2018         <a href="mailto:benoit.eudier@gmail.com">Snoozetime</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </small>
-            </div>
-        </div>
-    </div>
-    
-            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><!-- Add Jumbotron scroll js --><script type="text/javascript">//<![CDATA[
+$(window).load(function(){
+  $(window).scroll(function() {
+    var scrolledY = $(window).scrollTop();
+    $('.jumbotron').css('background-position', 'left ' + ((scrolledY)) + 'px');
+  });
+});//]]>
+</script><script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+moment.locale("en");
+fancydates(0, "YYYY-MM-DD HH:mm");
+</script><!-- end fancy dates --><!-- Abstract hide/show 
+<script src"/assets/js/div_toggle.js"></script>
+--><script type="text/javascript">
+function toggle(showHideDiv, switchTextDiv) {
+    var ele = document.getElementById(showHideDiv);
+    var text = document.getElementById(switchTextDiv);
+    if(ele.style.display == "none") {
+        ele.style.display = "block";
+        text.innerHTML = "[hide abstract]";
+    }
+    else {
+            ele.style.display = "none";
+            text.innerHTML = "[show abstract]";
+    }
+}
+</script>
 </body>
 </html>

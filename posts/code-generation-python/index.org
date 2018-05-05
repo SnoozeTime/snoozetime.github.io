@@ -85,11 +85,10 @@ input file.
 The format of the test definition is up to you; here we will just use plain
 text.
 
-#+BEGIN_QUOTE
+#+BEGIN_EXAMPLE
 1,2,3,4,5,6,7,8,9
-
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
-#+END_QUOTE
+#+END_EXAMPLE
 
 ** Generating the test data and test class
 

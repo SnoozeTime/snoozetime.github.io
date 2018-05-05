@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="author" content="Snoozetime">
+<title>Random pictures in Japan 1 | Snoozetime's webpage</title>
+<link href="../../assets/css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/base.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/layout.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/skeleton.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/screen.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+</head>
+<body>
+    <div class="container">
+        <div class="four columns sidebar">
+            <nav><!--Sidebar content--><h1 id="blog-title">
+                <a href="http://snoozetime.github.io/" title="Snoozetime's webpage">Snoozetime's webpage</a>
+            </h1>
+            <hr>
+<hr>
+<div id="social">
+            
+    
+
+            </div>
+            
+    <ul>
+<li> <a href="../../index.html"> Home </a> </li>
+            <li> <a href="../../archive.html"> Archives </a> </li>
+            <li> <a href="../../categories/index.html"> Tags </a> </li>
+            <li> <a href="../../rss.xml"> RSS </a> </li>
+    </ul>
+<hr></nav>
+</div>
+        <div class="eleven columns content">
+            
+    
+    <div class="postbox">
+        <h1>
+                Random pictures in Japan 1
+        </h1>
+        <div class="post"> <div class="figure">
+<p><img src="file:///images/monkey.jpg" alt="monkey.jpg"></p>
+<p><span class="figure-number">Figure 1:</span> A dude chilling with his monkey</p>
+</div> </div>
+        
+    <div class="meta">
+        <span class="date">
+            <time class="published" datetime="2018-05-03T22:56:55+09:00">2018-05-03 22:56</time></span>
+        <ul class="tags"></ul>
+</div>
+
+            
+    <ul class="pager">
+<li class="previous">
+            <a href="../code-generation-python/">← Previous post</a>
+        </li>
+    </ul>
+<div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="https-snoozetime-github-io",
+            disqus_url="http://snoozetime.github.io/posts/random-pictures-in-japan-1/",
+        disqus_title="Random pictures in Japan 1",
+        disqus_identifier="cache/posts/random-pictures-in-japan-1.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    </div>
+
+    
+
+
+            <div class="footer">
+                <small>Contents © 2018         <a href="mailto:benoit.eudier@gmail.com">Snoozetime</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </small>
+            </div>
+        </div>
+    </div>
+    
+            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+</body>
+</html>
