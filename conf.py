@@ -85,7 +85,7 @@ NAVIGATION_LINKS = {
 }
 
 # Name of the theme to use.
-THEME = "lagom4ni"
+THEME = 'cadair'#"lagom4ni"
 
 # Primary color of your theme. This will be used to customize your theme and
 # auto-generate related colors in POSTS_SECTION_COLORS. Must be a HEX value.

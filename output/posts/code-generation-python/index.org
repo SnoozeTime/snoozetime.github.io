@@ -85,11 +85,10 @@ input file.
 The format of the test definition is up to you; here we will just use plain
 text.
 
-#+BEGIN_QUOTE
+#+BEGIN_EXAMPLE
 1,2,3,4,5,6,7,8,9
-
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
-#+END_QUOTE
+#+END_EXAMPLE
 
 ** Generating the test data and test class
 
@@ -150,12 +149,12 @@ if __name__ == "__name__":
 We insert the test_case variable in the template by passing it as a keyword argument
 of the render method of jinja2.Template. This will print:
 
-#+BEGIN_QUOTE
+#+BEGIN_SRC xml
 <root>
     <value1>value1</value1>
     <value2>value2</value2>>
 </root>
-#+END_QUOTE
+#+END_SRC
 
 Creating the template for the java test class can be done in a similar fashion.
 Here, we will leverage the for loop of jinja.
@@ -295,5 +294,4 @@ day life. Even if your activities do not imply coding, there must be some repeti
 be automize. For example, sending the same mail to each mail address in an excel spreadsheet. This
 can be automized (see pandas to read from excel file).
 
-If you're interested in the subject, have a look at the following:
-- Automate
+If you're interested in the subject, have a look at [[https://automatetheboringstuff.com/][automate the boring stuff with Python.]]

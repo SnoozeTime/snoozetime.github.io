@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Snoozetime's webpage</title><link>http://snoozetime.github.io/</link><description>My personal site</description><atom:link type="application/rss+xml" rel="self" href="http://snoozetime.github.io/rss.xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:benoit.eudier@gmail.com"&gt;Snoozetime&lt;/a&gt; </copyright><lastBuildDate>Thu, 03 May 2018 12:58:17 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Code generation with Python - How learning Python can save you a bunch of time</title><link>http://snoozetime.github.io/posts/code-generation-python/</link><dc:creator>Snoozetime</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Snoozetime's webpage</title><link>http://snoozetime.github.io/</link><description>Post about my interests. Might include stuff about coding, reading, traveling or boxing</description><atom:link href="http://snoozetime.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:benoit.eudier@gmail.com"&gt;Snoozetime&lt;/a&gt; </copyright><lastBuildDate>Thu, 03 May 2018 14:36:44 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Random pictures in Japan 1</title><link>http://snoozetime.github.io/posts/random-pictures-in-japan-1/</link><dc:creator>Snoozetime</dc:creator><description>&lt;div class="figure"&gt;
+&lt;p&gt;&lt;img src="http://snoozetime.github.io/images/monkey.jpg" alt="monkey.jpg"&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;span class="figure-number"&gt;Figure 1:&lt;/span&gt; A dude chilling with his monkey&lt;/p&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class="figure"&gt;
+&lt;p&gt;&lt;img src="http://snoozetime.github.io/images/konniaku.jpg" alt="konniaku.jpg"&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;span class="figure-number"&gt;Figure 2:&lt;/span&gt; An overly dramatic caption&lt;/p&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class="figure"&gt;
+&lt;p&gt;&lt;img src="http://snoozetime.github.io/images/cupnoodle.jpg" alt="cupnoodle.jpg"&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;span class="figure-number"&gt;Figure 3:&lt;/span&gt; Preschool fun at the CupNoodle museum in Minato Mirai&lt;/p&gt;
+&lt;/div&gt;</description><guid>http://snoozetime.github.io/posts/random-pictures-in-japan-1/</guid><pubDate>Thu, 03 May 2018 13:56:55 GMT</pubDate></item><item><title>Code generation with Python - How learning Python can save you a bunch of time</title><link>http://snoozetime.github.io/posts/code-generation-python/</link><dc:creator>Snoozetime</dc:creator><description>&lt;p&gt;
 More often than not, working in a IT project requires a lot of repetitive
 tasks. In particular, one area that can be very debilitating is the creation
 of test data. We know it is indispensable to the project, but it does not
@@ -113,15 +133,10 @@ The format of the test definition is up to you; here we will just use plain
 text.
 &lt;/p&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;
+&lt;pre class="example"&gt;
 1,2,3,4,5,6,7,8,9
-&lt;/p&gt;
-
-&lt;p&gt;
 a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
-&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -199,14 +214,11 @@ We insert the test&lt;sub&gt;case&lt;/sub&gt; variable in the template by passin
 of the render method of jinja2.Template. This will print:
 &lt;/p&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;
-&amp;lt;root&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;root&amp;gt;
     &amp;lt;value1&amp;gt;value1&amp;lt;/value1&amp;gt;
     &amp;lt;value2&amp;gt;value2&amp;lt;/value2&amp;gt;&amp;gt;
 &amp;lt;/root&amp;gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;
 Creating the template for the java test class can be done in a similar fashion.
@@ -381,12 +393,8 @@ can be automized (see pandas to read from excel file).
 &lt;/p&gt;
 
 &lt;p&gt;
-If you're interested in the subject, have a look at the following:
+If you're interested in the subject, have a look at &lt;a href="https://automatetheboringstuff.com/"&gt;automate the boring stuff with Python.&lt;/a&gt;
 &lt;/p&gt;
-&lt;ul class="org-ul"&gt;
-&lt;li&gt;Automate
-&lt;/li&gt;
-&lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description><category>programming</category><category>python</category><guid>http://snoozetime.github.io/posts/code-generation-python/</guid><pubDate>Tue, 01 May 2018 15:00:00 GMT</pubDate></item><item><title>Fantasy novel series, and the Wait</title><link>http://snoozetime.github.io/posts/fantasy-novel-series-and-the-wait/</link><dc:creator>Snoozetime</dc:creator><description>&lt;p&gt;
 I've always been an avid reader of long fantasy novel series. As a kid, I used
