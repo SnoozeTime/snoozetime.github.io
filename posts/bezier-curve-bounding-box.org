@@ -10,9 +10,7 @@
 .. has_math: true
 #+END_COMMENT
 
-* Introduction
-
-<PUT IMAGE OF MICROMACHINE>
+[[../../images/micromachine.jpg]]
 
 Instead of the common FPS/RPG/Platformer, for some reason I decide to create a clone of the old micromachine,
 in particular the elimination mode when players are eliminated when they are too far away from the first player.
@@ -266,5 +264,83 @@ write down the last equations and filter the values.
 (You can even refactor this to do the calculation once! When reading back this code I noticed that
 I was a bit lazy here).
 
+
+Now, our minimum and maximum along x and y would be one of the point that has a parameter t, where t
+is either a root, 0 or 1.
+
+#+BEGIN_SRC csharp
+
+        List<float> roots = FindRoots(pa0, pa1, pa2, pa3);
+
+
+        // Initialize min and max with the first point
+        float min_x = Mathf.Min(pa0.x, pa3.x);
+        float max_x = Mathf.Max(pa0.x, pa3.x);
+        float min_y = Mathf.Min(pa0.y, pa3.y);
+        float max_y = Mathf.Max(pa0.y, pa3.y);
+
+        for (int i = 0; i < roots.Count; i++) {
+            float param = roots[i];
+            Vector2 point = GetPoint(pa0, pa1, pa2, pa3, param);
+
+            if (point.x > max_x) {
+                max_x = point.x;
+            }
+
+            if (point.x < min_x) {
+                min_x = point.x;
+            }
+
+            if (point.y > max_y) {
+                max_y = point.y;
+            }
+
+            if (point.y < min_y) {
+                min_y = point.y;
+            }
+        }
+#+END_SRC
+
+We have our $x_min$, $x_max$, $y_min$, $y_max$. This is all we need for drawing the bounding box.
+
+
+[[../../images/bounding_box_aligned.png]]
+
+
+
 ** Rotate the box back
-Apply in order a rotation of $-theta$ and a translation of $P_0$.
+
+Almost there! At this point, we have the bounding box of the aligned curve. To get the aligned curve,
+we applied two transformations to our Bezier curve: first a translation, then a rotation. To get back
+to the original curve, you can simply do the inverse! First, rotate the aligned curve by the opposite
+of the first rotation ($-\theta$), then translate it by the opposite of the first translation ($-P_0$).
+
+We can do the same with the bounding box, and it should fit our original Bezier curve!
+
+With the previous minima and maxima:
+#+BEGIN_SRC csharp
+
+        return new Vector2[] {
+            Rotate(new Vector2(min_x, min_y), -theta) + p0,
+            Rotate(new Vector2(min_x, max_y), -theta) + p0,
+            Rotate(new Vector2(max_x, min_y), -theta) + p0,
+            Rotate(new Vector2(max_x, max_y), -theta) + p0,
+        };
+
+#+END_SRC
+
+Which gives us, at last:
+
+[[../../images/bounding_box_final.png]]
+
+
+
+* What's next?
+
+All this to find the bounding boxes of each curve in our Bezier spline! While it looks like a lot of work,
+these bounding boxes are really going to help us find the projection of a point on the spline.
+
+Instead of having to consider all the spline, now we can just reduce the problem to a list of Bezier curves.
+Calculating distance to a box is pretty simple, so we just need to find the closest boxes to our point and
+for each curve, finding the closest point. This will be done by an iterative approach (mathematical approach
+is out of the question here - spoiler alert), so keep tuned for the next article.
