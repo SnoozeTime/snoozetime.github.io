@@ -7,86 +7,86 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>http://snoozetime.github.io/categories/2d.xml</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/bezier.xml</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/cat_code.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/cat_gamedev.xml</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://snoozetime.github.io/categories/cat_posts.xml</loc>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/cat_programming.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/cat_various.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/cryptocurrency.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://snoozetime.github.io/categories/emacs-learning.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/emacs.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/fantasy.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/gamedev.xml</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/learning.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/mathjax.xml</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/programming.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/python.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/reading.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/categories/unity.xml</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/galleries/demo/rss.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/galleries/rss.xml</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/rss.xml</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://snoozetime.github.io/sitemap.xml</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </sitemap>
 </sitemapindex>

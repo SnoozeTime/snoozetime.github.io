@@ -7,190 +7,134 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://snoozetime.github.io/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/2018/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/archive.html</loc>
-  <lastmod>2018-05-26T10:42:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/2d/</loc>
-  <lastmod>2018-05-26T10:42:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/bezier/</loc>
-  <lastmod>2018-05-26T10:42:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/cat_code/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/cat_gamedev/</loc>
-  <lastmod>2018-05-26T10:42:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://snoozetime.github.io/categories/cat_posts/</loc>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/cat_programming/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/cat_various/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/cryptocurrency/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/categories/emacs-learning/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/emacs/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/fantasy/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/gamedev/</loc>
-  <lastmod>2018-05-26T10:42:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/learning/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/mathjax/</loc>
-  <lastmod>2018-05-26T10:51:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/programming/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/python/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/reading/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/categories/unity/</loc>
-  <lastmod>2018-05-26T10:42:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/galleries/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/galleries/demo/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/listings/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/listings/__pycache__/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/listings/hello.py.html</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/about-nikola/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/bootstrap-demo/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/charts/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/creating-a-theme/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/dr-nikolas-vendetta/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/extending/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/handbook/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/internals/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/listings-demo/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/path-handlers/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/quickref/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/quickstart/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/slides-demo/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/social_buttons/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
- </url>
- <url>
-  <loc>http://snoozetime.github.io/pages/theming/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/posts/code-generation-python/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/posts/creating-notes-for-different-project-with-orgmode-and-emacs/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://snoozetime.github.io/posts/ethereum-virtual-machine-in-rust-part-1/</loc>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/posts/fantasy-novel-series-and-the-wait/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/posts/kucoin-rest-api-reality-check/</loc>
-  <lastmod>2018-05-26T10:38:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/posts/random-pictures-in-japan-1/</loc>
-  <lastmod>2018-05-26T10:42:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://snoozetime.github.io/posts/slug/</loc>
-  <lastmod>2018-05-26T10:42:00Z</lastmod>
+  <lastmod>2018-11-09T08:57:00Z</lastmod>
  </url>
 </urlset>
