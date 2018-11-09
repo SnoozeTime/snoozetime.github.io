@@ -1,4 +1,0 @@
-Sitemap: http://snoozetime.github.io/sitemapindex.xml
-
-User-Agent: *
-Host: snoozetime.github.io
