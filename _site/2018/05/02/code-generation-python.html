@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Code generation with Python &middot; SnoozeTime
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/blackdoc.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=EB+Garamond">
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          SnoozeTime
+        </a>
+      </h1>
+      <p class="lead">Articles about my interest in programming (Videos games, cryptocurrency)</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/styles.html">Theme Styles</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="/archive/master.zip">Download</a>
+      <hr>
+      <a class="sidebar-nav-item" href="">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v2.0.1</span>
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Code generation with Python</h1>
+  <span class="post-date">02 May 2018</span>
+  <p>More often than not, working in a IT project requires a lot of
+repetitive tasks. In particular, one area that can be very debilitating
+is the creation of test data. We know it is indispensable to the
+project, but it does not make that task less boring.</p>
+
+<h1 id="lets-consider-this-example">Let’s consider this example</h1>
+
+<blockquote>
+  <p>You are working in a Java project. One of the thing to test is the
+validation logic of some input XML files. One object, called the
+XmlInputSuperbEnterpriseValidator (notice the Java naming convention),
+takes a XML file path as input and return true if the file is valid.</p>
+</blockquote>
+
+<p>Input file is just a simple XML file, which could look like this:</p>
+
+<pre><code class="language-{.xml}">&lt;root&gt;
+  &lt;value1&gt;1&lt;/value1&gt;
+  &lt;value2&gt;a&lt;/value2&gt;
+&lt;/root&gt;
+</code></pre>
+
+<p>where value1 accepts number between 0 and 9 and value2 accepts letters
+(a-z).</p>
+
+<p>To test this, one can create a test class like the following.</p>
+
+<pre><code class="language-{.java}">package com.core.validator;
+
+import static org.junit.Assert.*;
+
+public class XmlInputSuperEnterpriseValidatorTest {
+
+    @Test
+    public void 01_normalInput_returnsTrue() {
+         assertTrue(XmlInputSuperbEnterpriseValidator.validate("input/01.xml"));
+    }
+}
+</code></pre>
+
+<p>Then, for each test case, create the XML file and add exactly the same
+test function.</p>
+
+<h1 id="when-things-go-sideways">When things go sideways</h1>
+
+<p>What if you have 50 different permutations of XML file. You’ll need to
+create all of them and create the exact same test methods. And what if
+the specification change and you have to add new fields? Here again, a
+lot of manual operation will be required to update the test cases.</p>
+
+<p>What could happen here is that the tests will just be thrown away as the
+maintenance is taking more effort that most people are willing to give.</p>
+
+<p>As a good little software engineer, one of the question that should pop
+out of your mind is: “Isn’t there a better way to do that?”</p>
+
+<h1 id="of-course-there-is-a-better-way">Of course there is a better way</h1>
+
+<p>It’s not rocket science, but using python (or any other language really)
+to automate the test creation will save you a bunch of time and also
+make everybody in the project happier.</p>
+
+<p>The basic workflow is the following:</p>
+
+<ol>
+  <li>Create test data definition: It could be just a simple text file
+that describes the tests you want to run.</li>
+  <li>Run the script to generate the data and the test class</li>
+  <li>Run the tests and enjoy</li>
+</ol>
+
+<h2 id="test-definition">Test definition</h2>
+
+<p>The test definition is the input of the generator. We need to specify
+what kind of test data we want to generate. In this example, we want to
+generate tests that will try all possible permutations for value1 and
+value2 of the input file.</p>
+
+<p>The format of the test definition is up to you; here we will just use
+plain text.</p>
+
+<pre><code class="language-{.example}">1,2,3,4,5,6,7,8,9
+a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+</code></pre>
+
+<h2 id="generating-the-test-data-and-test-class">Generating the test data and test class</h2>
+
+<h3 id="representing-our-test-data-in-python">Representing our test data in Python</h3>
+
+<p>First things first, let’s create a class that will represent the data
+for one test:</p>
+
+<pre><code class="language-{.python}">import os
+
+class TestData:
+
+    def __init__(self, name, path, value1, value2):
+        self.value1 = value1
+        self.value2 = value2
+        self.path = path
+        self.name = name
+
+</code></pre>
+
+<p>We have our test data representation, great. Now we need a way to
+convert it to text. We could just use Python string interpolation but
+there is a much better way.</p>
+
+<h3 id="templating-language-yokoso">Templating language, Yokoso</h3>
+
+<p>A very neat way to generate text file in python is to use a templating
+language. Web frameworks, such as Django or Flask, are heavy users of
+templating language to generate the HTML pages from data coming from the
+server.</p>
+
+<p>Here, we will use <a href="http://jinja.pocoo.org/docs/2.10/">jinja2</a> to
+generate our XML and java files. First, define the template using jinja
+templating language. Quick way is just to define it as a string in the
+python file but it can also be read from file, which is better practice
+when the templates are getting bigger and more numerous.</p>
+
+<pre><code class="language-{.python}">XML_TEMPLATE = """&lt;root&gt;
+    &lt;value1&gt;&lt;/value1&gt;
+    &lt;value2&gt;&lt;/value2&gt;&gt;
+&lt;/root&gt;
+"""
+</code></pre>
+
+<p>Notice the curly brackets? Jinja will replace what’s inside by whatever
+objects we pass. Object should have variables ‘value1’ and ‘value2’ to
+work.</p>
+
+<p>The next snippet will print this template with a test case object.</p>
+
+<pre><code class="language-{.python}">from jinja2 import Template
+
+if __name__ == "__name__":
+    template = Template(XML_TEMPLATE)
+    test_case = TestCase('name', 'path', 'value1', 'value2')
+    print(template.render(test_case=test_case)
+</code></pre>
+
+<p>We insert the test~case~ variable in the template by passing it as a
+keyword argument of the render method of jinja2.Template. This will
+print:</p>
+
+<pre><code class="language-{.xml}">&lt;root&gt;
+    &lt;value1&gt;value1&lt;/value1&gt;
+    &lt;value2&gt;value2&lt;/value2&gt;&gt;
+&lt;/root&gt;
+</code></pre>
+
+<p>Creating the template for the java test class can be done in a similar
+fashion. Here, we will leverage the for loop of jinja.</p>
+
+<pre><code class="language-{.python}">JAVA_TEMPLATE = """
+package com.core.validator;
+
+import static org.junit.Assert.*;
+
+public class XmlInputSuperbEnterpriseValidatorTest {
+
+    
+}
+
+"""
+</code></pre>
+
+<p>The variable to insert in the template is test~cases~. It should be an
+iterable as we use it in the for loop. Here how to generate 1000 test
+cases with the java class to test them.</p>
+
+<pre><code class="language-{.python}">from jinja2 import Template
+
+if __name__ == "__name__":
+    java_template = Template(JAVA_TEMPLATE)
+    xml_template = Template(XML_TEMPLATE)
+
+    path_out = "/somewhere/you/want/"
+    test_cases = [TestCase("{}_test".format(i),
+                           path_out,
+                           i,
+                           i+1) for i in range(0, 1000)]
+    # Create the java file
+    with open(path_out + 'XmlInputSuperbEnterpriseValidatorTest.java', 'w') as f:
+        f.write(java_template.render(test_cases=test_cases)
+
+    # Create the xml files
+    for test_case in test_cases:
+        with open(path_out + test_case.path + test_case.name, 'w') as f:
+            f.write(xml_template.render(test_case=test_case))
+</code></pre>
+
+<p>Instead of printing the rendered templates to the console, we will just
+write them to a file.</p>
+
+<h3 id="glue-everything-together">Glue everything together</h3>
+
+<p>We have a way to represent our tests, we have a way to print our tests
+to file, we just need to have a way to read our test specification and
+convert it to a TestCase object.</p>
+
+<p>Our input file first line is the value1, and the second line is the
+value2. To avoid cluttering the blog post, I will assume the file is
+always correct and has as many elements in the first line than in the
+second line.</p>
+
+<pre><code class="language-{.python}">with open('test_specification') as f:
+    test_input_values = [x.rstrip().split(',') for x in f.readlines()]
+values1 = test_input_values[0]
+values2 = test_input_values[1]
+</code></pre>
+
+<p>Then you can combine these value the way you want to create your test
+cases.</p>
+
+<p>Using zip:</p>
+
+<pre><code class="language-{.python}">test_cases = [TestCase('{}_test'.format(nb),
+                       path_out,
+                       value1,
+                       value2) for nb, (value1, value2) in enumerate(zip(values1, values2))]
+</code></pre>
+
+<p>zip will create a generator from many iterables. The ith element of a
+zip object is a tuple containing the ith elements of each of the input
+iterables. For example,</p>
+
+<pre><code class="language-{.python}">for a, b in zip([1, 2], [3, 4]):
+    print("{} - {}".format(a, b))
+</code></pre>
+
+<p>Will print “1 - 2” and “3 - 4”.</p>
+
+<p>zip is combined with enumerate. Enumerate is also very simple. It takes
+an iterator. The ith element of enumerate is (i, ith element of input
+iterator).</p>
+
+<pre><code class="language-{.python}">for index, el in enumerate(['a','b']):
+    print("Index {}: {}".format(index, el))
+</code></pre>
+
+<p>Will print “Index 0: a” and “Index 1: b”. Notice that when combining zip
+with enumerate, you need to add brackets when unpacking the values. Not
+using brackets would throw a ValueError (not enough values to unpack
+(expected 3, got 2). The reason is that enumerate is sending a tuple of
+size two.</p>
+
+<p>Another way to combine test cases is to use itertools.product. Product
+will yield all combinaisons possible of multiple iterables.</p>
+
+<pre><code class="language-{.python}">from itertools import product
+
+for a, b in product([1, 2], ['a', 'b', 'c']):
+    print("{} - {}".format(a, b))
+</code></pre>
+
+<p>will print: 1 - a 1 - b 1 - c 2 - a 2 - b 2 - c</p>
+
+<p>You can use product to test all the possible combinaisons of your input
+values.</p>
+
+<pre><code class="language-{.python}">from itertools import product
+
+test_cases = [TestCase('{}_test'.format(nb),
+                       path_out,
+                       value1,
+                       value2) for nb, (value1, value2) in enumerate(product(values1, values2))]
+</code></pre>
+
+<p>There is so much to say about generators, iterators.</p>
+
+<h1 id="generalizing-this-approach">Generalizing this approach</h1>
+
+<p>In this post, we learned about how to use python and jinja2 to automate
+test creation. Instead of spending your precious time writing
+boilerplate code, you can just focus on what you want to test.</p>
+
+<p>This is a simple example, the concept of automation is very powerful and
+helps tremendously in every day life. Even if your activities do not
+imply coding, there must be some repetitive task that can be automize.
+For example, sending the same mail to each mail address in an excel
+spreadsheet. This can be automized (see pandas to read from excel file).</p>
+
+<p>If you’re interested in the subject, have a look at <a href="https://automatetheboringstuff.com/">automate the boring
+stuff with Python.</a></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/11/09/ethereum-vm-1.html">
+            Ethereum Virtual Machine in Rust - Part 1
+            <small>09 Nov 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/05/22/bezier-curve-bounding-box.html">
+            Bezier curve in Unity: Bounding Boxes
+            <small>22 May 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/05/03/random-picture-japan.html">
+            Random pictures in Japan
+            <small>03 May 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

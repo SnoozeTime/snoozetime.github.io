@@ -1,0 +1,383 @@
+<h1 id="exploring-ethereum-virtual-machine">Exploring Ethereum Virtual Machine</h1>
+
+<p>Welcome to the great series - if everything goes well - about the Ethereum Virtual machine.
+Lately I have been growing fond of emulation and cryptocurrency so I decided to take a look
+at the inside of Ethereum: the virtual machine that is executing smart contracts.</p>
+
+<p>And while implementing a fake EVM (Ethereum Virtual Machine) can be a challenge, why not do
+it in a language I have absolutely no experience in. After these few lines, I realize the
+probabilities I finish this serie of blog post is meager at best.</p>
+
+<p>Anyway let’s get started. In this first part I’ll talk about compiling a solidity contract
+to binary file, and creating a small program to read each instruction.</p>
+
+<h2 id="our-amazing-smart-contract">Our Amazing smart contract</h2>
+
+<p>Take a look at this beauty.</p>
+
+<pre><code class="language-solidity">pragma solidity ^0.4.0;
+
+contract Addition{
+
+	int public x;
+    
+    function add(int a, int b) public {
+    	x = a + b;
+   	}
+}
+</code></pre>
+
+<p>It’s not doing much. Anybody can call <code class="highlighter-rouge">add</code> which will just store the addition of its
+argument in the ledger. Then anybody can read the value.</p>
+
+<p>Then, run <code class="highlighter-rouge">solc --bin-runtime --optimize -o . contract.sol</code> to output the compiled contract  binary code to the current directory.</p>
+
+<p>On my computer, I get:</p>
+<blockquote>
+  <p>608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663a5f3c23b81146043575b600080fd5b348015604e57600080fd5b50605b600435602435605d565b005b016000555600a165627a7a723058204ff1427599e28990ab2413948c03501a48ab89d18888ac7d0205c12f443424070029</p>
+</blockquote>
+
+<p>By the way, this is an hexadecimal string. This is going to be important when we read it from Rust (https://solidity.readthedocs.io/en/v0.4.21/using-the-compiler.html)</p>
+
+<h2 id="reading-the-binary-file">Reading the binary file</h2>
+
+<p>Rust makes it quite easy to read data from a file.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">error</span><span class="p">::</span><span class="n">Error</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">run</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">"myfilename"</span><span class="p">;</span>
+    
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">buffer</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="n">f</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">buffer</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">run</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>This is going to print the content of our file. Right now, the whole code is loaded in the
+string. There might be better way to do it but ultimately the code is always loaded in the RAM
+of the EVM. Also, the smart contracts tend to be small so it should be no problem to do it like
+that.</p>
+
+<h2 id="opcode-and-virtual-machine-execution">Opcode and Virtual machine execution</h2>
+
+<p>A virtual machine, such as the Java Virtual Machine, will take a set of instructions and execute
+them. in Java the set of instruction is in the Java bytecode (https://en.wikipedia.org/wiki/Java_bytecode). In Ethereum, the set of instruction is the content of the binary file we just read. The instruction set is described in the Ethereum Yellow paper, in the appendix. https://ethereum.github.io/yellowpaper/paper.pdf</p>
+
+<p>For example, the value 0x30 corresponds to the ADDRESS instruction (or opcode) and tells the
+ethereum VM to get the address of currently executed account. Let’s not worry about all the technical terms for now. Just keep in mind that our binary file is a set of instructions, and
+each instructions are 8 bits, or 1 byte, long.</p>
+
+<p>Our file content is an hexadecimal string, so we can represent the first bytes as:
+<em>0x60</em> <em>0x80</em> <em>0x60</em> <em>0x40</em> <em>0x52</em>
+If you look at the specifications, you can convert to a more readable format:</p>
+<ul>
+  <li>PUSH one byte to stack: 0x80</li>
+  <li>PUSH one byte to stack: 0x40</li>
+  <li>STORE one word to memory</li>
+</ul>
+
+<p>Next step in our program is to convert our string to a list of bytes (<code class="highlighter-rouge">u8</code> in Rust).</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">num</span><span class="p">::</span><span class="n">ParseIntError</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">decode</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">u8</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">ParseIntError</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="p">(</span><span class="n">s</span><span class="nf">.len</span><span class="p">()</span><span class="err">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="nf">.step_by</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="nf">.map</span><span class="p">(|</span><span class="n">i</span><span class="p">|</span> <span class="nn">u8</span><span class="p">::</span><span class="nf">from_str_radix</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">..</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">))</span>
+        <span class="nf">.collect</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>It will construct a vector of bytes. Function composition here makes the code very expressive:</p>
+<ul>
+  <li>We get an iterator from 0 to the length of our string (excluded)</li>
+  <li>We get another iterator that will yield the first iterator elements with a step of 2. (Yield 0, 2, 4, 6… and so on)</li>
+  <li>Then, for each index, we apply <code class="highlighter-rouge">u8::from_str_radix</code> to the slice [i..i+2] of our input string. This is going to convert the string to a <code class="highlighter-rouge">u8</code> integer, base 16. This can panic in case the string does not represent a valid integer base 16 (‘P0’ would panic)</li>
+  <li>We consume the iterators with collect.</li>
+</ul>
+
+<p>Iterators are lazy in Rust, so we need to call collect at the end to consume them. See here for more details: https://doc.rust-lang.org/book/second-edition/ch13-02-iterators.html</p>
+
+<p>The Result trait implements FromIter, so instead of returning <code class="highlighter-rouge">Vec&lt;Result&lt;u8, ParseIntError&gt;&gt;</code>, we can return <code class="highlighter-rouge">Result&lt;Vec&lt;u8&gt;, ParseIntError&gt;</code>. See also here https://doc.rust-lang.org/std/result/enum.Result.html#method.from_iter</p>
+
+<p>Now we can print our bytes from the files.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">fn</span> <span class="nf">run</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">"myfilename"</span><span class="p">;</span>
+    
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">buffer</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="n">f</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">buffer</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    
+    <span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="nf">decode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    
+    <span class="k">for</span> <span class="n">b</span> <span class="n">in</span> <span class="o">&amp;</span><span class="n">bytes</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"0x{:x}"</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> 
+    <span class="p">}</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="our-simple-evm">Our simple EVM</h2>
+
+<p>Now that we can read the bytes of our compiled smart contract, let’s start the implementation
+of the VM. I am just going to show how to print debug information about the instructions in this
+part. We are going to iterate over the list of instructions and print what they mean. No stack
+or memory involved here :)</p>
+
+<p>The most basic VM will hold the code in memory, and will iterate through it. We could use range-based loop to do the iteration, but you will see later that it won’t work nicely with our use case.
+For example, not all instructions are only one byte long. Some, such as PUSH3, are 4 bytes long (one byte for the instruction value, and 3 bytes for the value to push to the stack).</p>
+
+<p>For that reason, I am going to keep an index of the current instruction in the code vector. This index is often called pc, for program counter.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">struct</span> <span class="n">Vm</span> <span class="p">{</span>
+    <span class="n">code</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">u8</span><span class="o">&gt;</span><span class="p">,</span> <span class="c">// smart contract code</span>
+    <span class="n">pc</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="c">// current instruction</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">Vm</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">new_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Vm</span><span class="p">,</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="k">mut</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+        <span class="k">let</span> <span class="k">mut</span> <span class="n">buffer</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+        <span class="n">f</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">buffer</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+        <span class="k">let</span> <span class="n">code</span> <span class="o">=</span> <span class="nf">decode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">Vm</span> <span class="p">{</span> <span class="n">code</span><span class="p">:</span> <span class="n">code</span><span class="p">,</span> <span class="n">pc</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">new_from_file</code> will initialize us a new VM. Then, we need a way to model the instruction. I found enumeration in Rust well suited for this as they are very flexible. I also really like
+the pattern matching with enumerations.</p>
+
+<p>Let’s get started. There are more than an hundred instructions in the EVM instruction set so
+I’ll just show a few of them.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">enum</span> <span class="n">Opcode</span> <span class="p">{</span>
+
+    <span class="n">STOP</span><span class="p">,</span> <span class="c">// 0x00</span>
+    <span class="n">ADD</span><span class="p">,</span> <span class="c">// 0x01</span>
+    <span class="n">MUL</span><span class="p">,</span> <span class="c">// 0x02</span>
+    
+    <span class="nf">PUSH1</span><span class="p">(</span><span class="nb">u8</span><span class="p">),</span> <span class="c">// 0x60</span>
+    <span class="nf">PUSH2</span><span class="p">(</span><span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">),</span> <span class="c">// 0x61</span>
+    
+    <span class="nf">PUSH32</span><span class="p">(</span><span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">),</span> <span class="c">// 0x7f </span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><code class="highlighter-rouge">PUSH1(u8)</code> means that the instruction is made of 2 bytes. First byte is the instruction value, 
+second byte is the value to push to the stack. We are going to store this value in the enumeration.</p>
+
+<p>Now that we have our Opcode enumeration, we need to yield opcodes from the list of bytes. This is called decoding. The <code class="highlighter-rouge">next</code> function will return the Opcode at the current pc, and then advance pc to the next instruction.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="n">Vm</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Opcode</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="k">self</span><span class="py">.code</span><span class="p">[</span><span class="k">self</span><span class="py">.pc</span><span class="p">]</span> <span class="p">{</span>
+            <span class="mi">0x00</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="n">STOP</span><span class="p">)</span>
+            <span class="p">},</span>
+            <span class="mi">0x01</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="n">ADD</span><span class="p">)</span>
+            <span class="p">},</span>
+            <span class="mi">0x02</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="n">MUL</span><span class="p">)</span>
+            <span class="p">},</span>
+            <span class="mi">0x60</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">let</span> <span class="n">value</span> <span class="o">=</span> <span class="k">self</span><span class="py">.code</span><span class="p">[</span><span class="k">self</span><span class="py">.pc</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="nf">PUSH1</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="p">},</span>
+            <span class="n">Ox61</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">let</span> <span class="n">value0</span> <span class="o">=</span> <span class="k">self</span><span class="py">.code</span><span class="p">[</span><span class="k">self</span><span class="py">.pc</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+                <span class="k">let</span> <span class="n">value1</span> <span class="o">=</span> <span class="k">self</span><span class="py">.code</span><span class="p">[</span><span class="k">self</span><span class="py">.pc</span><span class="o">+</span><span class="mi">2</span><span class="p">];</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">3</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="nf">PUSH2</span><span class="p">(</span><span class="n">value0</span><span class="p">,</span> <span class="n">value1</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="n">_</span> <span class="k">=&gt;</span> <span class="p">{</span> <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="nb">None</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Right now, I ignore the error cases (for example, buffer overflow). Rust will panic if I try to
+access values with indexes that are larger that the size of the vector. Also, the code is a bit
+repetitive so there might be a better way to do it.</p>
+
+<p>What <code class="highlighter-rouge">next</code> is doing is basic, but at the heart of the instruction decoding:</p>
+<ul>
+  <li>Get the current byte</li>
+  <li>Match it with an opcode</li>
+  <li>If the opcode needs additional data from the instruction vector, extract them</li>
+  <li>Move pc to the next instruction</li>
+  <li>Return Opcode if found</li>
+</ul>
+
+<p>For the <code class="highlighter-rouge">PUSH</code> instructions, pc is incremented multiple times.</p>
+
+<h2 id="peeking-inside-the-code">Peeking inside the code</h2>
+
+<p><code class="highlighter-rouge">next</code> will give us the next instruction to execute. For now, I am just going to print it to
+the console without extra logic. This will be useful in the future to debug our code.</p>
+
+<p>The easiest way is to make our enum derive from <code class="highlighter-rouge">Debug</code>. Then we’ll be able to print the enum
+name with <code class="highlighter-rouge">println!</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">enum</span> <span class="n">Opcode</span> <span class="p">{</span>
+<span class="o">...</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">run</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="p">{</span>
+
+    <span class="o">...</span>
+    
+    <span class="k">loop</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="n">vm</span><span class="nf">.next</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+            <span class="nb">None</span> <span class="k">=&gt;</span> <span class="p">{}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Just by doing so, I have the following output.</p>
+<blockquote>
+  <p>ADD
+PUSH1(0)
+STOP
+MUL
+STOP
+thread ‘main’ panicked at ‘index out of bounds: the len is 143 but the index is 143’, libcore/slice/mod.rs:2046:10</p>
+</blockquote>
+
+<p>This is good, but we can do much better. First, just display the enumeration name and content does not give enough information. I’d like a description of the opcode and the address of the opcode in the binary. Second, this panic should not be there, as our program executed as expected.</p>
+
+<p>To avoid the panic, I’ll add a secret Opcode (sshh) that signifies our program ends. We could break on None in the loop but I still want to intepret the whole code even if there are codes I
+haven’t implemented yet. So let’s add <code class="highlighter-rouge">EOF</code> to our Opcode enumeration. In reality, 0x00 will
+take care of that.</p>
+
+<p>Before the match in <code class="highlighter-rouge">next</code>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">if</span> <span class="k">self</span><span class="py">.pc</span> <span class="o">&gt;=</span> <span class="k">self</span><span class="py">.code</span><span class="nf">.len</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="n">EOF</span><span class="p">);</span>
+        <span class="p">}</span>
+</code></pre></div></div>
+
+<p>And in the match of the main loop:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">loop</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="n">vm</span><span class="nf">.next</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="n">EOF</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">break</span><span class="p">,</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+            <span class="nb">None</span> <span class="k">=&gt;</span> <span class="p">{}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>Happy days!</p>
+
+<p>At last, I want to print more information. so let’s add the instruction number and the description for each enum.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">enum</span> <span class="n">Opcode</span> <span class="p">{</span>
+    <span class="nf">STOP</span><span class="p">(</span><span class="nb">usize</span><span class="p">),</span> <span class="c">// 0x00</span>
+    <span class="nf">ADD</span><span class="p">(</span><span class="nb">usize</span><span class="p">),</span> <span class="c">// 0x01</span>
+    <span class="nf">MUL</span><span class="p">(</span><span class="nb">usize</span><span class="p">),</span> <span class="c">// 0x02</span>
+
+    <span class="nf">PUSH1</span><span class="p">(</span><span class="nb">usize</span><span class="p">,</span> <span class="nb">u8</span><span class="p">),</span> <span class="c">// 0x60</span>
+    <span class="nf">PUSH2</span><span class="p">(</span><span class="nb">usize</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">),</span> <span class="c">// 0x61</span>
+    <span class="nf">PUSH32</span><span class="p">(</span><span class="nb">usize</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">),</span> <span class="c">// 0x7f </span>
+
+    <span class="n">EOF</span><span class="p">,</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>And next will become:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Opcode</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">self</span><span class="py">.pc</span> <span class="o">&gt;=</span> <span class="k">self</span><span class="py">.code</span><span class="nf">.len</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="n">EOF</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">let</span> <span class="n">addr</span> <span class="o">=</span> <span class="k">self</span><span class="py">.pc</span><span class="p">;</span>
+        <span class="k">match</span> <span class="k">self</span><span class="py">.code</span><span class="p">[</span><span class="n">addr</span><span class="p">]</span> <span class="p">{</span>
+             <span class="mi">0x00</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="nf">STOP</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span>
+            <span class="p">},</span>
+            <span class="mi">0x01</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="nf">ADD</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span>
+            <span class="p">},</span>
+            <span class="mi">0x02</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="nf">MUL</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span>
+            <span class="p">},</span>
+            <span class="mi">0x60</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">let</span> <span class="n">value</span> <span class="o">=</span> <span class="k">self</span><span class="py">.code</span><span class="p">[</span><span class="k">self</span><span class="py">.pc</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="nf">PUSH1</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+            <span class="p">},</span>
+            <span class="mi">0x61</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">let</span> <span class="n">value0</span> <span class="o">=</span> <span class="k">self</span><span class="py">.code</span><span class="p">[</span><span class="k">self</span><span class="py">.pc</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+                <span class="k">let</span> <span class="n">value1</span> <span class="o">=</span> <span class="k">self</span><span class="py">.code</span><span class="p">[</span><span class="k">self</span><span class="py">.pc</span><span class="o">+</span><span class="mi">2</span><span class="p">];</span>
+                <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">3</span><span class="p">;</span>
+                <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="nf">PUSH2</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">value0</span><span class="p">,</span> <span class="n">value1</span><span class="p">))</span>
+            <span class="p">},</span>
+            <span class="n">_</span> <span class="k">=&gt;</span> <span class="p">{</span> <span class="k">self</span><span class="py">.pc</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>  <span class="nb">None</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now we can create a function that will describe the opcode.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">impl</span> <span class="n">Opcode</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">describe</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="k">self</span> <span class="p">{</span>
+        <span class="nn">Opcode</span><span class="p">::</span><span class="nf">STOP</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"0x{:x}</span><span class="se">\t</span><span class="s">STOP</span><span class="se">\t</span><span class="s">Halts execution"</span><span class="p">,</span> <span class="n">line</span><span class="p">),</span>
+        <span class="nn">Opcode</span><span class="p">::</span><span class="nf">ADD</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"0x{:x}</span><span class="se">\t</span><span class="s">ADD</span><span class="se">\t</span><span class="s">Addition operation"</span><span class="p">,</span> <span class="n">line</span><span class="p">),</span>
+        <span class="nn">Opcode</span><span class="p">::</span><span class="nf">MUL</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"0x{:x}</span><span class="se">\t</span><span class="s">MUL</span><span class="se">\t</span><span class="s">Multiplication operation"</span><span class="p">,</span> <span class="n">line</span><span class="p">),</span>
+        <span class="nn">Opcode</span><span class="p">::</span><span class="nf">PUSH1</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"0x{:x}</span><span class="se">\t</span><span class="s">PUSH1</span><span class="se">\t</span><span class="s">Place 1-byte item on the stack 0x{:x}"</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+        <span class="nn">Opcode</span><span class="p">::</span><span class="nf">PUSH2</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"0x{:x}</span><span class="se">\t</span><span class="s">PUSH2</span><span class="se">\t</span><span class="s">Place 2-bytes item on the stack 0x{:x} 0x{:x}"</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Unknown opcode"</span><span class="p">)</span>
+ 
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c">// update run function</span>
+<span class="k">fn</span> <span class="nf">run</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+
+    <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">"Addition.bin-runtime"</span><span class="p">;</span>
+    
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"In file {}"</span><span class="p">,</span> <span class="n">filename</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">vm</span> <span class="o">=</span> <span class="nn">Vm</span><span class="p">::</span><span class="nf">new_from_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+    <span class="k">loop</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="n">vm</span><span class="nf">.next</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="nn">Opcode</span><span class="p">::</span><span class="n">EOF</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">break</span><span class="p">,</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="nf">.describe</span><span class="p">(),</span>
+            <span class="nb">None</span> <span class="k">=&gt;</span> <span class="p">{}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nf">Ok</span><span class="p">(())</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="a-final-word">A final word</h2>
+
+<p>I showed in this article how to create a tool to display the instructions from an ethereum smart contract binary. It is not complete: the <code class="highlighter-rouge">describe</code> and <code class="highlighter-rouge">next</code> method have to be populated with all the opcodes in order to be complete.</p>
+
+<p>In the next article I will introduce the memory layout of the EVM. We’ll talk about concepts such as stack, memory and persistent storage.</p>

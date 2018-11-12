@@ -1,0 +1,27 @@
+My experience with kucoin REST API
+==================================
+
+I've been playing a bit with cryptocurrency recently and Kucoin
+exchange, with its numerous coins, seemed like a great place to
+experiment.
+
+However, as often in software, reality and expectations are not aligned.
+Let's forget about Kucoin limitation as an exchange (no market order?),
+what really hurt was the REST API quality.
+
+Getting details of an order does not work:
+<https://github.com/sammchardy/python-kucoin/issues/23> (Check out the
+answer from the exchange support for extra fun). Then, when trying to
+cancel an order, I received a "System Error". It appeared that orders
+could not be canceled through the API for some time.
+
+Morale of the story
+===================
+
+It looks like I am bashing Kucoin here. I am not (well maybe a bit). The
+whole crypto space is young and moving at an extreme pace. Competition
+between exchanges is hard and it does not surprise me that not
+everything is working as expected.
+
+As a developer, one should program defensively when dealing with
+external parties, even more when the external party cannot be trusted.
