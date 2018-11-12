@@ -6,7 +6,7 @@ highlighter:      rouge
 title:            SnoozeTime
 tagline:          Programming & various topics
 description:      "Articles about my interest in programming (Videos games, cryptocurrency)"
-url:              https://github.com/SnoozeTime
+url:              https://snoozetime.github.io
 baseurl:          /
                   # the optional subpath of your site, e.g. "/my-jekyll-site/"
                   # This will apply to all pages in your Jekyll site.
