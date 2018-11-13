@@ -18,7 +18,7 @@ Let's consider this example
 
 Input file is just a simple XML file, which could look like this:
 
-``` {.xml}
+```xml
 <root>
   <value1>1</value1>
   <value2>a</value2>
@@ -30,7 +30,7 @@ where value1 accepts number between 0 and 9 and value2 accepts letters
 
 To test this, one can create a test class like the following.
 
-``` {.java}
+```java
 package com.core.validator;
 
 import static org.junit.Assert.*;
@@ -99,7 +99,7 @@ Generating the test data and test class
 First things first, let's create a class that will represent the data
 for one test:
 
-``` {.python}
+```python
 import os
 
 class TestData:
@@ -129,7 +129,7 @@ templating language. Quick way is just to define it as a string in the
 python file but it can also be read from file, which is better practice
 when the templates are getting bigger and more numerous.
 
-``` {.python}
+```python
 XML_TEMPLATE = """<root>
     <value1>{{ test_case.value1 }}</value1>
     <value2>{{ test_case.value2 }}</value2>>
@@ -143,7 +143,7 @@ work.
 
 The next snippet will print this template with a test case object.
 
-``` {.python}
+```python
 from jinja2 import Template
 
 if __name__ == "__name__":
@@ -156,7 +156,7 @@ We insert the test~case~ variable in the template by passing it as a
 keyword argument of the render method of jinja2.Template. This will
 print:
 
-``` {.xml}
+```xml
 <root>
     <value1>value1</value1>
     <value2>value2</value2>>
@@ -166,7 +166,7 @@ print:
 Creating the template for the java test class can be done in a similar
 fashion. Here, we will leverage the for loop of jinja.
 
-``` {.python}
+```python
 JAVA_TEMPLATE = """
 package com.core.validator;
 
@@ -189,7 +189,7 @@ The variable to insert in the template is test~cases~. It should be an
 iterable as we use it in the for loop. Here how to generate 1000 test
 cases with the java class to test them.
 
-``` {.python}
+```python
 from jinja2 import Template
 
 if __name__ == "__name__":
@@ -225,7 +225,7 @@ value2. To avoid cluttering the blog post, I will assume the file is
 always correct and has as many elements in the first line than in the
 second line.
 
-``` {.python}
+```python
 with open('test_specification') as f:
     test_input_values = [x.rstrip().split(',') for x in f.readlines()]
 values1 = test_input_values[0]
@@ -237,7 +237,7 @@ cases.
 
 Using zip:
 
-``` {.python}
+```python
 test_cases = [TestCase('{}_test'.format(nb),
                        path_out,
                        value1,
@@ -248,7 +248,7 @@ zip will create a generator from many iterables. The ith element of a
 zip object is a tuple containing the ith elements of each of the input
 iterables. For example,
 
-``` {.python}
+```python
 for a, b in zip([1, 2], [3, 4]):
     print("{} - {}".format(a, b))
 ```
@@ -259,7 +259,7 @@ zip is combined with enumerate. Enumerate is also very simple. It takes
 an iterator. The ith element of enumerate is (i, ith element of input
 iterator).
 
-``` {.python}
+```python
 for index, el in enumerate(['a','b']):
     print("Index {}: {}".format(index, el))
 ```
@@ -273,7 +273,7 @@ size two.
 Another way to combine test cases is to use itertools.product. Product
 will yield all combinaisons possible of multiple iterables.
 
-``` {.python}
+```python
 from itertools import product
 
 for a, b in product([1, 2], ['a', 'b', 'c']):
@@ -285,7 +285,7 @@ will print: 1 - a 1 - b 1 - c 2 - a 2 - b 2 - c
 You can use product to test all the possible combinaisons of your input
 values.
 
-``` {.python}
+```python
 from itertools import product
 
 test_cases = [TestCase('{}_test'.format(nb),

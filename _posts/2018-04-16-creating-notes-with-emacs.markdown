@@ -53,7 +53,7 @@ for project 'example' would be stored under \~/notes/projects/example/.
 Here comes the first function. It will fetch all the directories under
 the projects folder and ask the user to choose one.
 
-``` {.commonlisp}
+```cl
 
 (defvar my/project-path "~/notes/projects")
 
@@ -73,7 +73,7 @@ Get a note name
 
 To read a string from an user, read-string is the way to go.
 
-``` {.commonlisp}
+```cl
 
 (defun my/choose-note-name ()
   "Prompt user to choose a note name"
@@ -92,14 +92,14 @@ list of strings to be as easy, but unfortunatly it is slightly more
 complicated here. I am using the concatenate function that requires a
 type specifier.
 
-``` {.commonlisp}
+```cl
 (concatenate 'string "string1" "string2")
 ```
 
 In the next function, I am also using the let form which let (:')) me
 write cleaner code.
 
-``` {.commonlisp}
+```cl
 
 (defun my/create-note-name ()
   (let ((project-name (my/pick-project))
@@ -126,7 +126,7 @@ using find-file-other-window instead.
 
 The function looks like:
 
-``` {.commonlisp}
+```cl
 
 (defun my/create-new-project-note ()
   (interactive)
@@ -159,7 +159,7 @@ function everyday. Stay tuned for other code dissection ;)
 Full code
 =========
 
-``` {.commonlisp}
+```cl
 
 (defvar my/project-path "~/Nextcloud/notes/projects")
 
