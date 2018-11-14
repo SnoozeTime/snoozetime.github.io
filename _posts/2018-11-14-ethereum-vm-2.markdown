@@ -18,19 +18,19 @@ binary file. Now, I'll talked more about the memory model of the VM and how to u
 code compiled by solc.
 
 I'll try to answer those questions:
-- How are additions, multiplications and substractions implemented?
+- How are additions, multiplications and subtractions implemented?
 - How to find the compiled instructions for a block of solidity code?
-- How are IF condition implementated?
+- How are IF condition implemented?
 - Where is the smart contract data stored?
 
 There is a lot to cover here. In this post, I'll show what kind of operations are possible using the stack. There is a lot to cover so maybe this post will be split in two...
 
 ## VM specifications
 
-The VM is described in the yellow paper, part 9: https://ethereum.github.io/yellowpaper/paper.pdf
+The VM is described in the yellow paper, part 9: [Yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf)
 
 > The word size of the machine (and thus size of stack items0 is 256-bits.
-32 bytes word size is quite large. Yellow paper mentionned it is to facilitate the Keccak-256 hash scheme and elliptic-curve computations. Hum. Let's see later if we can find out what they mean.
+32 bytes word size is quite large. Yellow paper mentioned it is to facilitate the Keccak-256 hash scheme and elliptic-curve computations. Hum. Let's see later if we can find out what they mean.
 
 > The EVM is a simple stack-based architecture.
 
@@ -51,11 +51,11 @@ is stored under the contract's account.
 
 ## Fun with the stack
 According to Rust official documentation, the best way to model a stack is just to use a vector.
-Vec has `push` and `pop` operations so it fits well with our usecase. Unfortunately, the size
+Vec has `push` and `pop` operations so it fits well with our use case. Unfortunately, the size
 of the stack items is 256 bits, which is not standard in Rust so I needed to use an external
 package (I don't really want to implement 256-bits arithmetic myself...).
 
-The bigint package looks pretty complete: https://docs.rs/bigint/4.2.0/bigint/uint/struct.U256.html
+The bigint package looks pretty complete: [BigInt documentation](https://docs.rs/bigint/4.2.0/bigint/uint/struct.U256.html)
 We'll have to be careful with endianess here... (Ah, can't avoid this problem forever)
 
 Starting from part 1 implementation, our VM will become:
@@ -80,7 +80,7 @@ And the factory function:
 ```
 
 ### Additions
-As mentionned above, an addition implemented with a stack can be with the following operations:
+As mentioned above, an addition implemented with a stack can be with the following operations:
 - PUSH left operand
 - PUSH right operand
 - POP 2 items from stack and add them
@@ -137,7 +137,7 @@ the VM.
 ```
 
 For pushing a u8 integer on the stack, we can just convert it to U256 and use the built-in 
-push method of vector. Popping is also built-in, but it returns an Option. If the option is None at this point, there is NO way to recover gracelly as something must have gone wrong
+push method of vector. Popping is also built-in, but it returns an Option. If the option is None at this point, there is NO way to recover gracefully as something must have gone wrong
 with the compilation. Unwrap looks like a correct choice in that case.
 
 By the way, I am printing the instruction description before execution. It's always a good idea
@@ -617,4 +617,4 @@ That's a bunch of words already. We saw how the stack of the EVM was used to per
 evm code. We saw how to add unit tests to validate the behaviour of the VM. Phew!
 
 There are still some missing flow operations that I'd like to explore. In particular, I want to
-review the loop and the functions. This is going to be the topic of the next part of this serie.
+review the loop and the functions. This is going to be the topic of the next part of this series.
