@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ethereum Virtual Machine in Rust - Part 1"
+title: "Ethereum Virtual Machine in Rust - Part 1: Introduction"
 date: 2018-11-09
 ---
 # Exploring Ethereum Virtual Machine
@@ -12,6 +12,9 @@ at the inside of Ethereum: the virtual machine that is executing smart contracts
 And while implementing a fake EVM (Ethereum Virtual Machine) can be a challenge, why not do
 it in a language I have absolutely no experience in. After these few lines, I realize the
 probabilities I finish this serie of blog post is meager at best.
+
+* Ethereum virtual machine in Rust - Part 1 (this article)
+* [Ethereum virtual machine in Rust - Part 2: The stack]({% post_url 2018-11-14-ethereum-vm-2 %})
 
 Anyway let's get started. In this first part I'll talk about compiling a solidity contract
 to binary file, and creating a small program to read each instruction.
