@@ -254,6 +254,7 @@ a.sidebar-nav-item:focus {
  */
 
 .content {
+  width: 1024px;
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
