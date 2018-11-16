@@ -15,6 +15,7 @@ probabilities I finish this serie of blog post is meager at best.
 
 * Ethereum virtual machine in Rust - Part 1 (this article)
 * [Ethereum virtual machine in Rust - Part 2: The stack]({% post_url 2018-11-14-ethereum-vm-2 %})
+* [Ethereum virtual machine in Rust - Part 3: Loops and Pure functions]({% post_url 2018-11-17-ethereum-vm-3 %})
 
 Anyway let's get started. In this first part I'll talk about compiling a solidity contract
 to binary file, and creating a small program to read each instruction.
