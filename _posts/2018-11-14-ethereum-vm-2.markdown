@@ -8,6 +8,7 @@ date: 2018-11-14
 * [Ethereum virtual machine in Rust - Part 1: Introduction]({% post_url 2018-11-09-ethereum-vm-1 %})
 * Ethereum virtual machine in Rust - Part 2: The stack
 * [Ethereum virtual machine in Rust - Part 3: Loops and Pure functions]({% post_url 2018-11-17-ethereum-vm-3 %})
+* [Ethereum virtual machine in Rust - Part 4: After the stack, the memory]({% post_url 2018-11-28-ethereum-vm-4 %})
 
 # Memory model of Ethereum - The stack
 

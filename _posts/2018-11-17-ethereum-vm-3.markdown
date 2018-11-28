@@ -7,7 +7,7 @@ date: 2018-11-17
 * [Ethereum virtual machine in Rust - Part 1: Introduction]({% post_url 2018-11-09-ethereum-vm-1 %})
 * [Ethereum virtual machine in Rust - Part 2: The stack]({% post_url 2018-11-14-ethereum-vm-2 %})
 * Ethereum virtual machine in Rust - Part 3: Loops and Pure functions
-
+* [Ethereum virtual machine in Rust - Part 4: After the stack, the memory]({% post_url 2018-11-28-ethereum-vm-4 %})
 
 # Looping and calling Functions in the EVM!
 
