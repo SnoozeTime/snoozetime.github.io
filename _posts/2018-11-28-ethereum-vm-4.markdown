@@ -10,7 +10,7 @@ date: 2018-11-28
 * [Ethereum virtual machine in Rust - Part 3: Loops and Pure functions]({% post_url 2018-11-17-ethereum-vm-3 %})
 * Ethereum virtual machine in Rust - Part 4: After the stack, the memory
 * [Ethereum virtual machine in Rust - Part 5: Executing a real smart contract]({% post_url 2018-12-05-ethereum-vm-5 %})
-
+* [Ethereum virtual machine in Rust - Part 5-Bis: Executing a real smart contract with Rocket]({% post_url 2018-12-12-ethereum-vm-5bis %})
 
 In my previous posts about the Ethereum VM, I focused on very simple
 examples, using `Value Types`. These are variable that will always be passed

@@ -10,6 +10,7 @@ date: 2018-11-14
 * [Ethereum virtual machine in Rust - Part 3: Loops and Pure functions]({% post_url 2018-11-17-ethereum-vm-3 %})
 * [Ethereum virtual machine in Rust - Part 4: After the stack, the memory]({% post_url 2018-11-28-ethereum-vm-4 %})
 * [Ethereum virtual machine in Rust - Part 5: Executing a real smart contract]({% post_url 2018-12-05-ethereum-vm-5 %})
+* [Ethereum virtual machine in Rust - Part 5-Bis: Executing a real smart contract with Rocket]({% post_url 2018-12-12-ethereum-vm-5bis %})
 
 # Memory model of Ethereum - The stack
 
