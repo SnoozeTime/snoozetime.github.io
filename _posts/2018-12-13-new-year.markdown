@@ -1,0 +1,50 @@
+---
+title: "New year resolutions: 2019"
+date: 2018-12-13
+layout: post
+---
+
+In France we have new years resolutions. Usually I don't say anything because I tend to
+forget them. However, as I am writing more and more online, I wonder if writing some
+resolutions here would be a good incentive to meet them... I believe in setting my own
+goals, would it be personal goals or personal goals, to avoid the routine. So let's do it.
+
+
+## Read more books, with broader topics
+2018 has been a good year for me. I read a bunch of great Scifi books. These are truly inspirational,
+but I feel I am always getting my ideas from the same source. In 2019, I aim to read at least:
+- Fiction book not related to scifi
+- Non-fiction that does not relate to technology
+- A book that seems totally at odds with my life
+- A great classic
+- Some engineering book about space engineering (yea!)
+
+A few month ago, I read [Pachinko](https://www.goodreads.com/book/show/34051011-pachinko)
+and it was an awesome read. I need to reiterate this experience next year.
+
+
+## Finish my NES/Raspberry project
+I want to complete my NES emulator and put it in a raspberryPi so that I can
+play on my TV. The emulator does not need to be perfect but I want to run
+at least:
+- Super Mario Bros 3 (tough one)
+- The Legend of Zelda
+- Final Fantasy
+
+There is still a long road to go but this kind of very concrete project is the
+most awesome learning experience.
+
+## Contribute to Open-source
+I want to start sharing more the experience I get from work and personal projects.
+Either it would be by contributing more to some projects on github or by writing
+more on this blog.
+
+## Get my Finance straight
+Start saving that godamn money!
+
+## Start a new aventure
+This one is less concrete and more personal. I want to do something that really
+matters to me and people around. Unspecified yet.
+
+
+See you in one year!
