@@ -32,6 +32,7 @@ There is a lot to cover here. In this post, I'll show what kind of operations ar
 The VM is described in the yellow paper, part 9: [Yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf)
 
 > The word size of the machine (and thus size of stack items0 is 256-bits.
+
 32 bytes word size is quite large. Yellow paper mentioned it is to facilitate the Keccak-256 hash scheme and elliptic-curve computations. Hum. Let's see later if we can find out what they mean.
 
 > The EVM is a simple stack-based architecture.

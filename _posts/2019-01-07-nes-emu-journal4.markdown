@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "NES emulation journal: Implementing mappers"
-date: 2019-01-03
+date: 2019-01-07
 ---
 
 The first NES games were pretty simple. Arkanoid, Donkey Kong and Super Mario
