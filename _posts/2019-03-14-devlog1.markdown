@@ -1,0 +1,42 @@
+---
+layout: post
+title: "Devlog 1 - Game engine in Rust?"
+date: 2019-03-14
+---
+
+Hello world!
+
+I've been meaning to write more here but a new project was taking all my free time. Now that it
+looks a bit more presentable, I'll try to give more updates here! I like games, I like programming
+and I like Rust, so what's more nature than coding my own game engine :).
+
+## But there are a lot of game engines already!
+
+Yea well, ... that is life. 
+
+## Seriously, why?
+
+It all started because I wanted to learn 3D graphics. There are a couple of crates that interface
+with the graphic API with Rust, for example glium, gfx-hal and vulkano. I started with the latter
+because Vulkan is lower level than OpenGL and is also used in a lot of other languages. Hal looks
+great and is heavily inspired by the Vulkan API so I might switch later if cross-platform is too
+much of a concern.
+
+Anyway, from a simple triangle example, it evolved to a simple 3D game engine with a game editor.
+
+![Editor + Draft of arena]({{ site.url }}/assets/arena.gif)
+
+## A game in mind
+
+Instead of mindlessly coding some random 3D stuff, a friend joined me and we are going to develop
+a game at the same time as the engine. The game will be a multiplayer FPS, Arena style with cel
+shading style graphics. Let's do this!
+
+In the coming weeks I might add more content:
+- How the rendering engine is working under the hood
+- How the networking works
+- yada yada
+
+
+
+
