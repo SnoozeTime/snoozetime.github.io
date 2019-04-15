@@ -1,0 +1,31 @@
+---
+layout: post
+title: "Devlog 2 - Network code"
+date: 2019-03-14
+---
+
+I've always wanted to create a multiplayer game so networking code has been implemented from very early in the engine development. The requirements are very specific to the FPS arena style:
+- low latency
+- few players
+- avoid common hacks
+
+After reading a bunch, I decided to implement the application protocol over UDP, heavily inspired by the [Quake network code](https://fabiensanglard.net/quake3/network.php). Just to summarize very quickly:
+- One server that hold the true state of the game
+- One client per player
+- At first, the whole game state is sent to the players
+- Once it has been acknowledged that a player has received the game state, only the change in game state is sent afterwards
+
+For example, at first a player will receive all the game objects, including static objects such as trees and lights. During the game however, she will receive only the changes, such as the new position of another player. This allows to reduce a lot the size of the
+data sent.
+
+Serde library has been a blessing for packing the data. Tokio library has been an headache to get started with but it looks like it
+is working nicely now and only the lowest layer of the game engine network code is using Tokio.
+
+This is the result for now:
+![Editor + Draft of arena]({{ site.url }}/assets/network.gif)
+
+This is UDP so messages that are sent are not necessarily received. The client side is always sending messages, including the
+player command such as `move` or `shoot`. These can be lost. My next step in that area would be to add some reliable message sending
+for use case such as chat messages.
+
+Cheers~
