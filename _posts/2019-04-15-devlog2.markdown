@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Devlog 2 - Network code"
-date: 2019-03-14
+date: 2019-04-15
 ---
 
 I've always wanted to create a multiplayer game so networking code has been implemented from very early in the engine development. The requirements are very specific to the FPS arena style:
