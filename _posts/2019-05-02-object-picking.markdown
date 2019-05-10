@@ -321,4 +321,4 @@ Then, by inverting the encoding of before, we get the selected entity.
 
 This was an easy way of doing object picking using the GPU. It's not particularly performant as the scene is drawn again. It is also not part of the main rendering pipeline as this is an on-demand feature. For a small number of object, the current implementation does the trick.
 
-The code is available on my github so feel free to use it as it is.
+The code is available on my [github](https://github.com/SnoozeTime/vulkano-samples) so feel free to use it as it is.
