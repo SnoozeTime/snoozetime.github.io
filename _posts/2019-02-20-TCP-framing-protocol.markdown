@@ -7,10 +7,10 @@ date: 2019-02-20
 I often use TCP for communication within a network of systems. Let's just use the example
 of a online game. The client, that is the game that is running on your own machine, needs
 to get the latest game update from the server, which is located on my environment. The
-client also needs to send updates to the server. For example, if your character moves and shoot,
+client also needs to send updates to the server. For example, if your character moves and shoots,
 this information need to be forwarded to the server.
 
-Here, I won't talk about problematics such as who hold the true state between the server and client.
+Here, I won't talk about problematics such as who holds the true state between the server and client.
 I will just show an easy way to send messages across the network.
 
 I'll show how to solve common problems that are encountered when sending data across the network:
@@ -32,7 +32,7 @@ you find '\r\n' and here you are, one complete message. This is called message f
 ### Basics with Tokio
 
 I'll use the `Tokio` crate for creating the server and client of my application. 'Tokio' introduces
-very quickly the concept of framing in its example. See the following striped down example, from [`chat.rs`](https://github.com/tokio-rs/tokio/blob/master/examples/chat.rs).
+very quickly the concept of framing in its example. See the following stripped down example, from [`chat.rs`](https://github.com/tokio-rs/tokio/blob/master/tokio/examples/chat.rs).
 
 ```rust
 
