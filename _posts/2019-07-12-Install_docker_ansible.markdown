@@ -6,6 +6,7 @@ date: 2019-07-12
 
 Just putting that here as a reference ;) Remote servers are running Ubuntu 18.
 
+{% raw %}
 ```yaml
 - name: Add an apt key for Docker
       apt_key:
@@ -34,3 +35,4 @@ Just putting that here as a reference ;) Remote servers are running Ubuntu 18.
     append: yes
 
 ```
+{% endraw %}
